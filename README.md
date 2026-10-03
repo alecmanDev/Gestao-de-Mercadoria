@@ -72,6 +72,11 @@ O backup inclui a contagem, as categorias, os fornecedores, os produtos de giro 
 ## Problemas comuns
 
 - **A página dá erro 404**: confirme que os arquivos estão na raiz da branch escolhida e espere um ou dois minutos depois de ativar o Pages.
+- **Só consigo criar atalho, ou aparece "Não foi possível abrir o aplicativo"**:
+  1. Abra no navegador `SEU-ENDERECO/manifest.webmanifest` e `SEU-ENDERECO/sw.js`. Os dois precisam mostrar texto. Se der 404, falta enviar o arquivo ou ele está na pasta errada.
+  2. Apague da tela inicial qualquer atalho criado antes.
+  3. Abra o endereço no Chrome, espere carregar, feche a aba e abra de novo, para o app atualizar.
+  4. Toque nos três pontinhos e escolha **Instalar app**. Se o menu mostrar **Abrir app**, o Chrome acha que o app já está instalado. Nesse caso, digite `chrome://webapks` na barra de endereço para ver os apps instalados e remova o que for desta página.
 - **O botão Instalar não aparece**: o app precisa estar aberto pelo endereço `https://` do GitHub Pages, e talvez já esteja instalado. No iPhone não existe esse botão, use Compartilhar.
 - **O download do arquivo não funciona no iPhone**: use **Compartilhar arquivo** ou **Copiar como texto**.
 - **Os dados sumiram**: provavelmente os dados do navegador foram limpos ou o endereço mudou. Importe o último backup.

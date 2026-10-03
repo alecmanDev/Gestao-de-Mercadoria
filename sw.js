@@ -1,6 +1,6 @@
 /* Service worker: deixa o app abrir sem internet.
    Se mudar os ícones ou o manifesto, aumente o número da versão abaixo. */
-const CACHE = "estoque-v1";
+const CACHE = "estoque-v2";
 const SHELL = [
   "./", "./index.html", "./manifest.webmanifest",
   "./icon-192.png", "./icon-512.png", "./icon-maskable-512.png", "./apple-touch-icon.png"
@@ -36,7 +36,19 @@ self.addEventListener("fetch", (e) => {
       );
       return;
     }
-    // Ícones e manifesto: cache primeiro.
+    // Manifesto: rede primeiro, para o Chrome sempre ler a versão atual.
+    if (req.destination === "manifest" || url.pathname.endsWith(".webmanifest")) {
+      e.respondWith(
+        fetch(req.url, { cache: "no-cache" })
+          .then((res) => {
+            if (res.ok) { const copy = res.clone(); caches.open(CACHE).then((c) => c.put("./manifest.webmanifest", copy)); }
+            return res;
+          })
+          .catch(() => caches.match("./manifest.webmanifest"))
+      );
+      return;
+    }
+    // Ícones: cache primeiro.
     e.respondWith(
       caches.match(req).then((hit) => hit || fetch(req).then((res) => {
         if (res.ok) { const copy = res.clone(); caches.open(CACHE).then((c) => c.put(req, copy)); }
